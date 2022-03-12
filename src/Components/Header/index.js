@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "../../Images/Logo.svg";
 import { Button, Text } from "../ExportStyles";
 import LoginCard from "../Login";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,10 +12,13 @@ const Wrapper = styled.div`
   background: white;
   align-items: center;
   position: relative;
-  
+
   .Logo {
     width: 180px;
     object-fit: contain;
+    :hover{
+      cursor:pointer;
+    }
   }
 
   .Buttondiv {
@@ -24,12 +28,13 @@ const Wrapper = styled.div`
 `;
 
 const Header = ({ college }) => {
+  const navigate = useNavigate();
   const [loginClicked, toggleLogin] = useState(false);
   const [signUpClicked, toggleSignup] = useState(false);
 
   return (
     <Wrapper>
-      <img className="Logo" src={Logo} />
+      <img className="Logo" src={Logo} onClick={() => navigate('/')}/>
       {college && (
         <Text size="20px" weight="300">
           {college}
