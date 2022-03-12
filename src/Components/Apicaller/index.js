@@ -1,7 +1,7 @@
 import axios from "axios";
-// import env from "react-dotenv";
+import env from "react-dotenv";
 
-export const URL = [{ loginUrl: process.env.REACT_APP_LOGIN_URL }];
+export const URL = [{ loginUrl: env.REACT_APP_LOGIN_URL }];
 
 export async function AxiosGet(url) {
   const response = await axios.get(url);

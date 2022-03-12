@@ -123,10 +123,6 @@ const CanteenList = () => {
                 <Card
                   key={key}
                   data={item}
-                  // count={count}
-                  // setCounter={setCounter}
-                  // add={item.id == id ? true : false}
-                  // setAdd={setAddID}
                 />
               );
             })}

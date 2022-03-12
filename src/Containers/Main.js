@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Homepage from "./Homepage";
 import CanteenList from "./Canteenlist";
 import Canteenmenu from "./Canteenmenu";
+import WorkerDashboard from "./WorkerDashBoard";
 import Orderconfirmation from "./Orderconfirmation";
 // import UserDetails from "./UserDetails";
 
@@ -13,7 +14,8 @@ const Main = () => {
       {/* <Route path="/login" element={<Login />} /> */}
       {/* <Route path="/otp" element={<Otp />} /> */}
       {/* <Route path="/userdetails" element={<UserDetails/>} /> */}
-      <Route path="/" element={<Homepage/>} />
+      <Route path="/" element={<Homepage />} />
+      <Route path="/workerDashboard" element={<WorkerDashboard />} />
       <Route path="/canteenlist" element={<CanteenList/>}/>
       <Route path="/canteenmenu" element={<Canteenmenu/>}/>
       <Route path="/placeorder" element={<Orderconfirmation/>}/>
