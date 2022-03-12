@@ -4,48 +4,47 @@ import { Button, Text } from "../ExportStyles";
 import fooditem from "../../Images/fooditem.svg";
 
 const Carddiv = styled.div`
-    position: relative;
-    width: 400px;
+  position: relative;
+  width: 350px;
+  height: 200px;
+  background-image: url(${(props) => props.bg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  // padding: 10px;
 
-    .img{
-        position: absolute;
-        top: 0px;
-        left 0px;
-        z-index:1;
-    }
+  .div {
+    position: absolute;
+    z-index:1;
+    width: 350px;
+    height: 200px;
+    border-radius: 10px;
+    background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  }
 
-    .add{
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index:1;
-    }
+  .add {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+  }
 
-    .counter{
-        display: flex;
-        gap: 5px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index:1;
-    }
-
-    .Text-price{
-        padding: 5px 15px;
-        display: flex;
-        position: absolute;
-        bottom: 5px;  
-        text-align: left;
-        width: 100%;
-        z-index: 1;
-    }
+  .text-price {
+    display: flex;
+    position: absolute;
+    left: 15px;
+    bottom: 8px;
+    width: 90%;
+    z-index: 2;
+    justify-content: space-between;
+  }
 `;
 
-const Card = ({ data }) => {
-
+const Card = ({ data, order }) => {
   return (
-    <Carddiv>
-      <img src={fooditem} />
+    <Carddiv bg={data.image}>
+      <div className="div" />
       {/* {add ? (
         <Counter/>
       ) : (
@@ -53,18 +52,13 @@ const Card = ({ data }) => {
           + Add
         </Button>
       )} */}
-      <Counter name={data?.name}/>
-      <div className="Text-price">
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Text color="white" size="25px" weight="500">
-            {data?.name}
-          </Text>
-          <Text color="white" size="15px">
-            {data?.canteen}
-          </Text>
-        </div>
-        <Text color="white" size="20px">
-          {data?.price}
+      <Counter data={data} order={order} />
+      <div className="text-price">
+        <Text color="white" size="22px" weight="400">
+          {data?.name}
+        </Text>
+        <Text color="white" size="20px" weight="200">
+          ₹{data?.price}/-
         </Text>
       </div>
     </Carddiv>

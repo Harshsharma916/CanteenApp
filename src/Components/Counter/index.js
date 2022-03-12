@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Button } from "../ExportStyles";
 
@@ -8,16 +9,25 @@ const Counterdiv = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const Counterbutton = styled(Button)`
-    padding: 5px 15px;
-`
+  padding: 5px 15px;
+  color: white;
+  opacity: 0.8;
+`;
 
-const Counter = ({name}) => {
+const Counter = ({ data, order }) => {
   const [count, setCount] = useState(0);
-
+  const dispatch = useDispatch();
+  //   const placeorderdata = {...data,count}
+  function placeOrder() {
+    if (order && count) {
+      dispatch({ type: "placeOrder", data: { ...data, count } });
+    }
+  }
+  placeOrder();
   return (
     <Counterdiv className="counter">
       <Counterbutton
@@ -38,6 +48,7 @@ const Counter = ({name}) => {
       <Counterbutton bg="#FE724D" onClick={() => setCount((prev) => prev + 1)}>
         +
       </Counterbutton>
+      {/* {(order && count>0)? dispatch({type:'placeOrder',data:{...data,count}}):''} */}
     </Counterdiv>
   );
 };
