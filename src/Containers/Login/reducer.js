@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { fromJS } from 'immutable';
+// import { fromJS } from 'immutable';
 import { createActions } from 'reduxsauce';
 
 export const initialState = {
@@ -8,23 +8,24 @@ export const initialState = {
 };
 
 export const { Types: loginTypes, Creators: loginCreators } = createActions({
-  requestSendOtp: ['data'],
+  requestSendPassword: ['data'],
   successOtpSent: ['data'],
-  sendingOtpFailure: ['error'],
+  sendingPasswordFailure: ['error'],
 });
 
 /* eslint-disable default-case, no-param-reassign */
 export const loginReducer = (state = initialState, action) => {
   return produce(state, (/* draft */) => {
     switch (action.type) {
-      case loginTypes.REQUEST_SEND_OTP:
+      case loginTypes.REQUEST_SEND_PASSWORD:
+        console.log('INSIDE REDUCER')
         return state
           .set('otpData', action.data)
           .set('loading', true)
       case loginTypes.SUCCESS_OTP_SENT:
         return state
           .set('loading', false)
-      case loginTypes.SENDING_OTP_FAILURE:
+      case loginTypes.SENDING_PASSWORD_FAILURE:
         return state
           .set('loading', false)
     //   case loginTypes.CLEAR:

@@ -7,7 +7,7 @@ import { HashRouter } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import reducer from "./utils/reducers";
+import reducer,{initialState} from "./utils/reducer";
 // import "./fonts/blackpine-font/Blackpine-4BEVW.ttf";
 
 const persistedState = localStorage.getItem("reduxState")
