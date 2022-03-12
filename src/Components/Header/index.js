@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Logo from "../../Images/Logo.svg";
 import { Button, Text } from "../ExportStyles";
 import LoginCard from "../Login";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 30px 65px;
+  padding: 30px 5%;
   justify-content: space-between;
   background: white;
   align-items: center;
@@ -16,8 +17,8 @@ const Wrapper = styled.div`
   .Logo {
     width: 180px;
     object-fit: contain;
-    :hover{
-      cursor:pointer;
+    :hover {
+      cursor: pointer;
     }
   }
 
@@ -27,14 +28,21 @@ const Wrapper = styled.div`
   }
 `;
 
-const Header = ({ college }) => {
+const Header = ({ college, show }) => {
   const navigate = useNavigate();
   const [loginClicked, toggleLogin] = useState(false);
   const [signUpClicked, toggleSignup] = useState(false);
+  const loginData = useSelector((state) => state.loginData);
+
+  useEffect(() => {
+    if (show) {
+      toggleLogin(true);
+    }
+  }, [show]);
 
   return (
     <Wrapper>
-      <img className="Logo" src={Logo} onClick={() => navigate('/')}/>
+      <img className="Logo" src={Logo} onClick={() => navigate("/")} />
       {college && (
         <Text size="20px" weight="300">
           {college}
@@ -63,12 +71,16 @@ const Header = ({ college }) => {
           Sign up
         </Button>
       </div>
-      <LoginCard
-        loginClicked={loginClicked}
-        signUpClicked={signUpClicked}
-        toggleLogin={toggleLogin}
-        toggleSignup={toggleSignup}
-      />
+      {loginData?.name ? (
+        ""
+      ) : (
+        <LoginCard
+          loginClicked={loginClicked}
+          signUpClicked={signUpClicked}
+          toggleLogin={toggleLogin}
+          toggleSignup={toggleSignup}
+        />
+      )}
     </Wrapper>
   );
 };
