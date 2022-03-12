@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import Login from './Containers/Login';
 import Main from './Containers/Main';
 
 function App() {

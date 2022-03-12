@@ -91,7 +91,7 @@ const FoodList = () => {
   // const canteens = [{ id: 0, name: "AMUL CORNER", imgSrc: fooditem }];
   return (
     <>
-      <Header college={''}/>
+      <Header college={canteens[0].college.name}/>
       <Wrapper>
         <Toppickdiv>
           <div className="toppick-header">

@@ -1,5 +1,4 @@
 // import { combineReducers } from "redux";
-import login from "../Containers/Login/reducer";
 
 export const initialState = {
   loginData: [],
