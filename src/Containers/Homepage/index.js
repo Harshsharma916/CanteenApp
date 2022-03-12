@@ -135,7 +135,6 @@ const Homepage = () => {
         "https://grub-it.herokuapp.com/api/v1/college/name"
       );
       if (response.data.status == "success") {
-				console.log(response?.data?.data.college)
         dispatch({ type: "collegelist", data: response?.data?.data.college });
       }
     }
@@ -154,7 +153,7 @@ const Homepage = () => {
       `https://grub-it.herokuapp.com/api/v1/canteen/${college_id}`
     );
     if (response.data.status == "success") {
-      console.log(response.data.data.canteen, "SUBMIT COLLEGE ID");
+      // console.log(response.data.data.canteen, "SUBMIT COLLEGE ID");
       dispatch({ type: "canteenData", data: response?.data?.data.canteen});
 			navigate('/canteenlist')
     }
