@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 // import Profile from "./Profile";
 import Homepage from "./Homepage";
-import FoodList from "./Canteenlist";
+import CanteenList from "./Canteenlist";
 import Canteenmenu from "./Canteenmenu";
 import WorkerDashboard from "./WorkerDashBoard";
+import Orderconfirmation from "./Orderconfirmation";
 // import UserDetails from "./UserDetails";
 
 const Main = () => {
@@ -14,9 +15,10 @@ const Main = () => {
       {/* <Route path="/otp" element={<Otp />} /> */}
       {/* <Route path="/userdetails" element={<UserDetails/>} /> */}
       <Route path="/" element={<Homepage />} />
-      <Route path="/foodlist" element={<FoodList />} />
-      <Route path="/canteenmenu" element={<Canteenmenu />} />
       <Route path="/workerDashboard" element={<WorkerDashboard />} />
+      <Route path="/canteenlist" element={<CanteenList/>}/>
+      <Route path="/canteenmenu" element={<Canteenmenu/>}/>
+      <Route path="/placeorder" element={<Orderconfirmation/>}/>
       {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   );

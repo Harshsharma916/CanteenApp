@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Counter from "../Counter";
-import { Text } from "../ExportStyles";
+import { Text,Button } from "../ExportStyles";
 
 const Carddiv = styled.div`
   display: flex;
@@ -27,6 +27,7 @@ const Carddiv = styled.div`
   .order-div {
     display: flex;
     flex-direction: column;
+    margin-left: auto;
   }
 `;
 const Menucard = ({ data, order }) => {
@@ -45,7 +46,7 @@ const Menucard = ({ data, order }) => {
         </Text>
       </div>
       <div className="order-div">
-        <Counter order={order} data={data} />
+        {data.count? <Button color="white" bg="#FE724D" style={{padding: '5px 25px'}}>{data.count}</Button>:<Counter order={order} data={data} />}
       </div>
     </Carddiv>
   );

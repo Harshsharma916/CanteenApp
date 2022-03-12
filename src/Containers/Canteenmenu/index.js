@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Wrapper, Text, Button } from "../../Components/ExportStyles";
 import Card from "../../Components/FoodCard";
@@ -43,6 +44,7 @@ const Placeorderdiv = styled.div`
 `;
 
 const Canteenmenu = () => {
+  const navigate = useNavigate();
   const selectedCanteen = useSelector((state) => state.selectedCanteen);
   const categories = ["Patties", "Rolls", "Parathas"];
   const [placeOrder, setPlaceOrder] = useState(false);
@@ -50,8 +52,9 @@ const Canteenmenu = () => {
   console.log(selectedCanteen.menu.rolls, "MENU");
 
   function PlaceOrder() {
-    console.log('INSIDE PLACEORDER')
+    console.log("INSIDE PLACEORDER");
     setPlaceOrder(true);
+    navigate("/placeorder");
   }
 
   return (
@@ -116,7 +119,7 @@ const Canteenmenu = () => {
         <Placeorderdiv>
           <Button onClick={() => PlaceOrder()} bg="#FE724D">
             {" "}
-            PLACE ORDER
+            PROCEED
           </Button>
           <Button> GO BACK</Button>
         </Placeorderdiv>
