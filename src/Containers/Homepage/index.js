@@ -4,7 +4,7 @@ import { Button, Text, Wrapper } from "../../Components/ExportStyles";
 import Header from "../../Components/Header";
 import bgimg from "../../Images/bgimg.svg";
 import { Formik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { get } from "loadsh";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
@@ -19,7 +19,7 @@ const Subdiv = styled.div`
   height: 90vh;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 5%;
+  // padding: 0px 5%;
 
   .info {
     display: flex;
@@ -82,7 +82,7 @@ const About = styled.div`
   flex-direction: column;
   text-align: left;
   gap: 10px;
-  padding: 100px 5%;
+  padding: 100px 0px;
 `;
 
 const Form = styled.form`
@@ -128,28 +128,43 @@ const Form = styled.form`
 `;
 
 const Homepage = () => {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [loginClicked, toggleLogin] = useState(true);
+  const [loginClicked, toggleLogin] = useState(false);
   const [signUpClicked, toggleSignup] = useState(false);
   const [college, findCollege] = useState("");
-	const [collegeList,setCollegeList] = useState({});
+  const [collegeList, setCollegeList] = useState({});
 
   useEffect(() => {
     async function collegeapi() {
-      const response = await AxiosGet("");
-			if (response.status == "success"){
-				setCollegeList(response.data)
-			} 
+      const response = await AxiosGet(
+        "https://grub-it.herokuapp.com/api/v1/college/name"
+      );
+      if (response.data.status == "success") {
+        dispatch({ type: "collegelist", data: response?.data?.data.college });
+      }
     }
-		collegeapi()
+    collegeapi();
+    console.log("USEEFFECT");
   }, []);
 
-  const colleges = [
-   "IIT ROORKEE" , "IIT BOMBAY"
-  ];
-  // const collegeID = ['622bd54dbf985e0ddb37462b','']
+  const colleges = useSelector((state) => state.collegeList);
+  const collegeName = colleges.map((item, key) => {
+    return item.name;
+  });
+
+	const college_id = colleges[collegeName.indexOf(college)]?._id;
+
+  const handleSubmitCollege = async () => {
+    const response = await AxiosGet(
+      `https://grub-it.herokuapp.com/api/v1/canteen/${college_id}`
+    );
+    if (response.data.status) {
+      console.log(response.data.data.canteen, "SUBMIT COLLEGE ID");
+      dispatch({ type: "canteenData", data: response?.data?.data.canteen });
+    }
+  };
 
   const handleValidate = (value) => {
     const errors = {};
@@ -158,10 +173,25 @@ const Homepage = () => {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value.email)) {
       errors.email = "Invalid email address";
     }
-    if (!value.password || !value.confirmPassword) {
+    if (!value.password) {
+      errors.password = "Required";
+    }
+    return errors;
+  };
+
+  const handleValidate1 = (value) => {
+    const errors = {};
+    if (!value.email) {
+      errors.email = "Required";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value.email)) {
+      errors.email = "Invalid email address";
+    }
+    if (!value.password) {
       errors.password = "Required";
     } else if (value.password != value.confirmPassword) {
       errors.confirmPassword = "Please enter the same password";
+    } else if (!value.confirmPassword) {
+      errors.confirmPassword = "Required";
     }
     if (!value.contact) {
       errors.contact = "Required";
@@ -172,12 +202,13 @@ const Homepage = () => {
   };
 
   const handleOnSubmit = async (values) => {
+    console.log("HANDLE SUBMIT");
     if (values.name) {
       setLoading(true);
-      const data = { ...values, collegeId: "622bd54dbf985e0ddb37462b" };
+      const data = { ...values, college: "622bd54dbf985e0ddb37462b" ,contact: parseInt(values.contact)};
       try {
         console.log("SIGNUP");
-        dispach({ type: "signup", data: values });
+        dispatch({ type: "signup", data: values });
         const response = await AxiosPost(
           "https://grub-it.herokuapp.com/api/v1/user/signup",
           data
@@ -196,6 +227,7 @@ const Homepage = () => {
         });
       }
     } else {
+      console.log("LOGIN");
       setLoading(true);
       try {
         // const user = await api.post("/api/v1/user/login", values);
@@ -216,7 +248,7 @@ const Homepage = () => {
         );
         if (response.status == "success") {
           setLoading(false);
-          dispach({ type: "login", data: response?.data?.user });
+          dispatch({ type: "login", data: response?.data?.user });
           notification.success({
             message: "Successfully Logged In!",
           });
@@ -287,7 +319,6 @@ const Homepage = () => {
                   style={{ width: "65%", marginTop: "20px" }}
                   type={"submit"}
                   onClick={handleSubmit}
-                  loading={loading}
                 >
                   Login
                 </Button>
@@ -306,7 +337,7 @@ const Homepage = () => {
               confirmPassword: "",
               name: "",
             }}
-            validate={handleValidate}
+            validate={handleValidate1}
             onSubmit={handleOnSubmit}
           >
             {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -418,7 +449,7 @@ const Homepage = () => {
                     weight="200"
                     onClick={(e) => findCollege(e.target.innerHTML)}
                   >
-                    {colleges.find((item) => {
+                    {collegeName.find((item) => {
                       return Object.values(item)
                         .join("")
                         .toLowerCase()
@@ -429,7 +460,7 @@ const Homepage = () => {
               ) : (
                 ""
               )}
-              <div className="button" onClick={() => {}}>
+              <div className="button" onClick={handleSubmitCollege}>
                 Go
               </div>
               {/* <Button>GO</Button> */}

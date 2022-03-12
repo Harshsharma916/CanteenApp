@@ -3,6 +3,7 @@ import Login from "./Login";
 // import Otp from "./Otp";
 // import Profile from "./Profile";
 import Homepage from "./Homepage";
+import FoodList from "./Foodlist";
 // import UserDetails from "./UserDetails";
 
 const Main = () => {
@@ -13,6 +14,7 @@ const Main = () => {
       {/* <Route path="/otp" element={<Otp />} /> */}
       {/* <Route path="/userdetails" element={<UserDetails/>} /> */}
       <Route path="/" element={<Homepage/>} />
+      <Route path="/foodlist" element={<FoodList/>}/>
       {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   );

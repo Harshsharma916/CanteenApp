@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   position: relative;
   background: #D7D7D7;
+  padding: 0px 5%;
 
   // .BgImg {
   //   position: absolute;
@@ -30,7 +31,7 @@ export const Button = styled.button`
   transition: 0.3s;
   text-align: center;
   border: none;
-  
+
   &:hover {
     cursor: pointer;
     transform: scale(${(props)=> props.scale});

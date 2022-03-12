@@ -6,7 +6,6 @@ const Wrapper = styled.div`
   // gap: 20px;
   justify-content: space-between;
   padding: 100px 5%;
-  // margin-top: 100px;
 `;
 
 const ContactInfo = styled.div`
