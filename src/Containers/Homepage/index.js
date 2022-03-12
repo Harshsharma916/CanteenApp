@@ -156,7 +156,7 @@ const Homepage = () => {
     if (response.data.status == "success") {
       console.log(response.data.data.canteen, "SUBMIT COLLEGE ID");
       dispatch({ type: "canteenData", data: response?.data?.data.canteen});
-			navigate('/foodlist')
+			navigate('/canteenlist')
     }
   };
 
