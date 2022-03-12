@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Homepage from "./Homepage";
 import FoodList from "./Canteenlist";
 import Canteenmenu from "./Canteenmenu";
+import WorkerDashboard from "./WorkerDashBoard";
 // import UserDetails from "./UserDetails";
 
 const Main = () => {
@@ -12,9 +13,10 @@ const Main = () => {
       {/* <Route path="/login" element={<Login />} /> */}
       {/* <Route path="/otp" element={<Otp />} /> */}
       {/* <Route path="/userdetails" element={<UserDetails/>} /> */}
-      <Route path="/" element={<Homepage/>} />
-      <Route path="/foodlist" element={<FoodList/>}/>
-      <Route path="/canteenmenu" element={<Canteenmenu/>}/>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/foodlist" element={<FoodList />} />
+      <Route path="/canteenmenu" element={<Canteenmenu />} />
+      <Route path="/workerDashboard" element={<WorkerDashboard />} />
       {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   );
