@@ -1,12 +1,13 @@
 import styled from "styled-components";
+import bg from "../Images/bg.svg";
 
 export const Wrapper = styled.div`
-  // height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  background: #D7D7D7;
+  background: #d7d7d7;
   padding: 20px 5%;
+  background-image: url(${bg});
 
   // .BgImg {
   //   position: absolute;
@@ -21,12 +22,12 @@ export const Wrapper = styled.div`
 export const Button = styled.button`
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   text-transform: uppercase;
   font-size: 1rem;
   letter-spacing: 0.15rem;
   transition: all 0.3s;
-  background: ${props => props.bg};
+  background: ${(props) => props.bg};
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   text-align: center;
@@ -34,7 +35,7 @@ export const Button = styled.button`
 
   &:hover {
     cursor: pointer;
-    transform: scale(${(props)=> props.scale});
+    transform: scale(${(props) => props.scale});
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
 `;
