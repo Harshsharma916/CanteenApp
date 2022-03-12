@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AxiosGet } from "../../Components/Apicaller";
 import { Text, Wrapper } from "../../Components/ExportStyles";
 import Card from "../../Components/FoodCard";
 import Header from "../../Components/Header";
@@ -23,7 +25,7 @@ export const Toppickdiv = styled.div`
   }
   .img-div {
     display: flex;
-    gap: 40px;
+    gap: 4%;
     overflow-x: scroll;
     ::-webkit-scrollbar {
       display: none;
@@ -53,8 +55,8 @@ const Canteensdiv = styled.div`
       left: 10px;
     }
 
-    :hover{
-      cursor:pointer;
+    :hover {
+      cursor: pointer;
     }
   }
 
@@ -72,11 +74,21 @@ const Canteensdiv = styled.div`
 `;
 const CanteenList = () => {
   const dispatch = useDispatch();
-  const [count, setCounter] = useState(0);
-  const [id, setAddID] = useState(0);
+  const navigate = useNavigate();
   const canteens = useSelector((state) => state?.canteenData);
 
   useEffect(() => {});
+
+  async function changeRoute(item) {
+    const response = await AxiosGet(
+      `https://grub-it.herokuapp.com/api/v1/canteen/622c9f26b0bdf47b2307940f/622caa483b41d0c1c3164a7b` 
+    );
+    console.log(response, "CANTEEN ID");
+    if (response?.data?.status == "success") {
+      dispatch({ type: "selectedCanteen", data: response.data.data });
+      navigate("/canteenmenu");
+    }
+  }
 
   const foodItems = [
     {
@@ -97,7 +109,7 @@ const CanteenList = () => {
   // const canteens = [{ id: 0, name: "AMUL CORNER", imgSrc: fooditem }];
   return (
     <>
-      <Header college={canteens[0].college.name}/>
+      <Header college={canteens[0].college.name} />
       <Wrapper>
         <Toppickdiv>
           <div className="toppick-header">
@@ -125,9 +137,15 @@ const CanteenList = () => {
           <div className="img-div">
             {canteens.map((item, key) => {
               return (
-                <div key={key} className="canteenCard" onClick={() => dispatch({type:'selectedCanteen',data:item})}>
+                <div
+                  key={key}
+                  className="canteenCard"
+                  onClick={() => changeRoute(item)}
+                >
                   <img src={fooditem} className="img" />
-                  <Text className="text" color="white" weight="500" size="20px">{item.name}</Text>
+                  <Text className="text" color="white" weight="500" size="20px">
+                    {item.name}
+                  </Text>
                 </div>
               );
             })}

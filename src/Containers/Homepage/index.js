@@ -147,7 +147,7 @@ const Homepage = () => {
     return item.name;
   });
 
-	const college_id = colleges[collegeName.indexOf(college)]?._id;
+	const college_id = colleges?.[collegeName.indexOf(college)]?._id;
 
   const handleSubmitCollege = async () => {
     const response = await AxiosGet(

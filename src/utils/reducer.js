@@ -5,7 +5,8 @@ export const initialState = {
   signupData: [],
   collegeList: [],
   canteenData: [],
-  selectedCanteen: []
+  selectedCanteen: [],
+  placeOrder:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, canteenData: action.data };
     case "selectedCanteen":
       return {...state, selectedCanteen: action.data};
+    case "placeOrder":
+      return {...state,placeOrder: [...state.placeOrder,action.data]}
     default:
       return state;
   }

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   position: relative;
   background: #D7D7D7;
-  padding: 0px 5%;
+  padding: 20px 5%;
 
   // .BgImg {
   //   position: absolute;

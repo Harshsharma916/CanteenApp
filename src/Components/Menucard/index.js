@@ -3,40 +3,52 @@ import Counter from "../Counter";
 import { Text } from "../ExportStyles";
 
 const Carddiv = styled.div`
+  display: flex;
+  padding: 10px;
+  width: 410px;
+  position: relative;
+  //   background: black;
+  border-radius: 10px;
+  border: 1px black solid;
+
+  .img {
+    width: 150px;
+    border-radius: 10px;
+  }
+
+  .text-div {
     display: flex;
-    padding: 10px;
-    width: 400px;
-    position: relative;
+    flex-direction: column;
+    text-align: left;
+    padding: 0px 10px;
+    gap: 8px;
+  }
 
-    .img{
-        width: 200px;
-    }
-
-    .text-div{
-        display:flex;
-        flex-direction:column;
-    }
-
-    .order-div{
-        display: flex;
-        flex-direction:column;
-    }
-`
-const Menucard = ({data}) =>{
-    return(
-        <Carddiv>
-            <img src={data.imgSrc} className="img"/>
-            <div className="text-div">
-                <Text size="20px" weight="400">{data.name}</Text>
-                <Text size="12px" weight="200">{data.info}</Text>
-                <Text size="22px" weight="400">₹{data.price}</Text>
-            </div>
-            <div className="order-div">
-                <Counter style={{right:"0px"}}/>
-            </div>
-        </Carddiv>
-    )
-
-}
+  .order-div {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+const Menucard = ({ data, order }) => {
+  return (
+    <Carddiv>
+      <img src={data.image} className="img" />
+      <div className="text-div">
+        <Text size="18px" weight="200">
+          {data.name}
+        </Text>
+        <Text size="12px" weight="200">
+          {data.info}
+        </Text>
+        <Text size="20px" weight="400">
+          ₹{data.price}
+        </Text>
+      </div>
+      <div className="order-div">
+        <Counter order={order} data={data} />
+      </div>
+    </Carddiv>
+  );
+};
 
 export default Menucard;
