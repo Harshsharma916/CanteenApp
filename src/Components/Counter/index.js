@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { Button } from "../ExportStyles";
 
@@ -15,8 +15,9 @@ const Counterbutton = styled(Button)`
     padding: 5px 15px;
 `
 
-const Counter = () => {
+const Counter = ({name}) => {
   const [count, setCount] = useState(0);
+
   return (
     <Counterdiv className="counter">
       <Counterbutton

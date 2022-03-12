@@ -3,17 +3,11 @@ import styled from "styled-components";
 import { Button, Text, Wrapper } from "../../Components/ExportStyles";
 import Header from "../../Components/Header";
 import bgimg from "../../Images/bgimg.svg";
-import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { get } from "loadsh";
 import { useNavigate } from "react-router";
-import { useCookies } from "react-cookie";
-import { notification } from "antd";
 import { AxiosGet, AxiosPost, URL } from "../../Components/Apicaller";
 import { useEffect, useState } from "react";
-import { CloseOutlined } from "@ant-design/icons";
-import LoginCard from "../../Components/Login";
-// import env from "react-dotenv";
+
 
 const Subdiv = styled.div`
   display: flex;

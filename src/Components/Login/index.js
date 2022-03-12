@@ -14,7 +14,7 @@ const Form = styled.form`
   position: absolute;
   top: 110px;
   right: 10px;
-  z-index: 1;
+  z-index: 5;
   display: flex;
   width: 600px;
   height: 650px;

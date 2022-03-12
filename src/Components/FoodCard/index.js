@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Counter from "../Counter";
 import { Button, Text } from "../ExportStyles";
+import fooditem from "../../Images/fooditem.svg";
 
 const Carddiv = styled.div`
     position: relative;
@@ -40,17 +41,19 @@ const Carddiv = styled.div`
     }
 `;
 
-const Card = ({ data, count, setCounter, add, setAdd }) => {
+const Card = ({ data }) => {
+
   return (
     <Carddiv>
-      <img src={data.imgSrc} />
-      {add ? (
+      <img src={fooditem} />
+      {/* {add ? (
         <Counter/>
       ) : (
         <Button className="add" bg="#FE724D" onClick={() => setAdd(data.id)}>
           + Add
         </Button>
-      )}
+      )} */}
+      <Counter name={data?.name}/>
       <div className="Text-price">
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Text color="white" size="25px" weight="500">

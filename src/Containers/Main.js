@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 // import Profile from "./Profile";
 import Homepage from "./Homepage";
-import FoodList from "./Foodlist";
+import FoodList from "./Canteenlist";
+import Canteenmenu from "./Canteenmenu";
 // import UserDetails from "./UserDetails";
 
 const Main = () => {
@@ -13,6 +14,7 @@ const Main = () => {
       {/* <Route path="/userdetails" element={<UserDetails/>} /> */}
       <Route path="/" element={<Homepage/>} />
       <Route path="/foodlist" element={<FoodList/>}/>
+      <Route path="/canteenmenu" element={<Canteenmenu/>}/>
       {/* <Route path="/profile" element={<Profile />} /> */}
     </Routes>
   );

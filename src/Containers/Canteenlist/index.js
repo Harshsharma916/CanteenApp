@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Text, Wrapper } from "../../Components/ExportStyles";
 import Card from "../../Components/FoodCard";
 import Header from "../../Components/Header";
 import fooditem from "../../Images/fooditem.svg";
 
-const Toppickdiv = styled.div`
+export const Toppickdiv = styled.div`
   display: flex;
   gap: 10px;
   overflow-x: scroll;
@@ -40,6 +40,7 @@ const Canteensdiv = styled.div`
   .canteenCard {
     position: relative;
     width: max-content;
+
     .img {
       // position: absolute;
       // z-index: 1;
@@ -50,6 +51,10 @@ const Canteensdiv = styled.div`
       z-index: 8;
       bottom: 10px;
       left: 10px;
+    }
+
+    :hover{
+      cursor:pointer;
     }
   }
 
@@ -65,7 +70,8 @@ const Canteensdiv = styled.div`
     row-gap: 20px;
   }
 `;
-const FoodList = () => {
+const CanteenList = () => {
+  const dispatch = useDispatch();
   const [count, setCounter] = useState(0);
   const [id, setAddID] = useState(0);
   const canteens = useSelector((state) => state?.canteenData);
@@ -105,10 +111,10 @@ const FoodList = () => {
                 <Card
                   key={key}
                   data={item}
-                  count={count}
-                  setCounter={setCounter}
-                  add={item.id == id ? true : false}
-                  setAdd={setAddID}
+                  // count={count}
+                  // setCounter={setCounter}
+                  // add={item.id == id ? true : false}
+                  // setAdd={setAddID}
                 />
               );
             })}
@@ -123,7 +129,7 @@ const FoodList = () => {
           <div className="img-div">
             {canteens.map((item, key) => {
               return (
-                <div key={key} className="canteenCard">
+                <div key={key} className="canteenCard" onClick={() => dispatch({type:'selectedCanteen',data:item})}>
                   <img src={fooditem} className="img" />
                   <Text className="text" color="white" weight="500" size="20px">{item.name}</Text>
                 </div>
@@ -136,4 +142,4 @@ const FoodList = () => {
   );
 };
 
-export default FoodList;
+export default CanteenList;
