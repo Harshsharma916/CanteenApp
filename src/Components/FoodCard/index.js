@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Counter from "../Counter";
 import { Button, Text } from "../ExportStyles";
 
 const Carddiv = styled.div`
@@ -44,26 +45,7 @@ const Card = ({ data, count, setCounter, add, setAdd }) => {
     <Carddiv>
       <img src={data.imgSrc} />
       {add ? (
-        <div className="counter">
-          <Button
-            bg="#FE724D"
-            onClick={() =>
-              setCounter((prev) => {
-                if (count == 0) {
-                  return 0;
-                } else {
-                  return prev - 1;
-                }
-              })
-            }
-          >
-            -
-          </Button>
-          <Button bg="#FE724D">{count}</Button>
-          <Button bg="#FE724D" onClick={() => setCounter((prev) => prev + 1)}>
-            +
-          </Button>
-        </div>
+        <Counter/>
       ) : (
         <Button className="add" bg="#FE724D" onClick={() => setAdd(data.id)}>
           + Add
