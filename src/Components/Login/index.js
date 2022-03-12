@@ -52,7 +52,7 @@ const Form = styled.form`
   }
 `;
 
-const LoginCard = ({toggleLogin,toggleSignup,loginClicked,signUpClicked}) => {
+const LoginCard = ({toggleLogin,toggleSignup,loginClicked,signUpClicked,show}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

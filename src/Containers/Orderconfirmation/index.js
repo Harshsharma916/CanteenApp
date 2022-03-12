@@ -9,6 +9,7 @@ import { AxiosGet, AxiosPost, URL } from "../../Components/Apicaller";
 import { useEffect, useState } from "react";
 import Menucard from "../../Components/Menucard";
 import Logo from "../../Images/Logo.svg";
+import successImg from "../../Images/success.svg"
 
 const Body = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ const Pricediv = styled.div`
       }
     }
 
-    .upi , .cod{
+    .selected{
       padding: 5px 0px;
       width: 120px;
       background: rgba(254,120,77,0.9);
@@ -83,6 +84,8 @@ const Orderconfirmation = () => {
   const orderitems = useSelector((state) => state.placeOrder);
   const loginData = useSelector((state) => state.loginData);
   const [payment,setpayment] = useState('');
+  const [success,setSuccess] = useState(false);
+  const [show,setShow] = useState(false);
 
   useEffect(() => {
     // if (location.state?.promoCode && !selectedPromocode) {
@@ -104,10 +107,8 @@ const Orderconfirmation = () => {
   }, []);
 
   function totalAmount() {
-    console.log(orderitems)
     let total = 0;
     for (let i=0; i < orderitems.length; i++) {
-      console.log(orderitems[i].price)
       total += orderitems[i].price * orderitems[i].count;
     }
     return total;
@@ -164,9 +165,20 @@ const Orderconfirmation = () => {
     r.open();
   };
 
+  function placeOrder(){
+    if(loginData?.name){
+      if(payment==='upi'){
+        razorpayStandardCheckout(finalizeReq)
+      }else{
+        setSuccess('true');
+      }
+    }else{
+      setShow((prev) => !prev)
+    }
+  }
   return (
     <>
-      <Header />
+      <Header show={show}/>
       <Wrapper>
         <Text style={{marginTop:'30px',textAlign:'left',marginBottom:'20px'}} size="30px" weight="500">Orders</Text>
         <Body>
@@ -175,11 +187,14 @@ const Orderconfirmation = () => {
               return <Menucard key={key} data={item} />;
             })}
           </div>
+          {
+            success && <img src={successImg}/>
+          }
           <Pricediv>
             <Text size="28px" style={{textAlign:'left'}} weight="400">Price Details</Text>
             <div className="categorydiv">
               <div className="category">Delivery</div>
-              <div className="category">Pick up</div>
+              <div className="selected">Pick up</div>
               <div className="category">Dine in</div>
             </div>
             <div className="ordersummary">
@@ -205,11 +220,11 @@ const Orderconfirmation = () => {
             <div className="payment">
               <Text size="20px" style={{textAlign: 'left'}}>Payment</Text>
               <div className="categorydiv">
-                <div className={payment=='upi'?'upi':'category'} onClick={()=> setpayment('upi')}>UPI</div>
-                <div className={payment=='cod'?'cod':'category'} onClick={()=> setpayment('cod')}>COD</div>
+                <div className={payment=='upi'?'selected':'category'} onClick={()=> setpayment('upi')}>UPI</div>
+                <div className={payment=='cod'?'selected':'category'} onClick={()=> setpayment('cod')}>COD</div>
               </div>
             </div>
-            <Button bg="#FE724D" color="white" onClick={() => {payment==='upi' && razorpayStandardCheckout(finalizeReq)}}>PLACEORDER</Button>
+            <Button bg="#FE724D" color="white" onClick={() => placeOrder()}>PLACE ORDER</Button>
           </Pricediv>
         </Body>
       </Wrapper>
