@@ -115,7 +115,7 @@ const LoginCard = ({toggleLogin,toggleSignup,loginClicked,signUpClicked,show}) =
           notification.success({
             message: "Successfully Signed up!",
           });
-          navigate("/home");
+          navigate("/");
         }
       } catch (err) {
         setLoading(false);

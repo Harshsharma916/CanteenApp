@@ -14,7 +14,8 @@ import successImg from "../../Images/success.svg"
 const Body = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 100vh;
+  height: 80vh;
+  position: relative;
 
   .orderitems {
     display: flex;
@@ -25,6 +26,23 @@ const Body = styled.div`
     ::-webkit-scrollbar{
       display: none;
     }
+  }
+  .successImg{
+    width: 40%;
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 30%;
+  }
+  .bodydiv{
+    position: absolute;
+    background: black;
+    z-index: 1;
+    opacity: 0.3;
+    width: 110%;
+    left: -85px;
+    top: -100px;
+    height: 85vh;
   }
 `;
 
@@ -156,6 +174,7 @@ const Orderconfirmation = () => {
           // dispatchRemovePickupData(pickupData);
           // dispatchRemoveSelectedStoreId(selectedStoreId);
           // history.replace(routeConstants.success.route);
+          setSuccess(true)
         } else {
           console.log('PAYMENT ERROR');
         }
@@ -170,7 +189,7 @@ const Orderconfirmation = () => {
       if(payment==='upi'){
         razorpayStandardCheckout(finalizeReq)
       }else{
-        setSuccess('true');
+        setSuccess(true);
       }
     }else{
       setShow((prev) => !prev)
@@ -182,13 +201,13 @@ const Orderconfirmation = () => {
       <Wrapper>
         <Text style={{marginTop:'30px',textAlign:'left',marginBottom:'20px'}} size="30px" weight="500">Orders</Text>
         <Body>
-          <div className="orderitems">
+          <div className="orderitems" >
             {orderitems.map((item, key) => {
               return <Menucard key={key} data={item} />;
             })}
           </div>
           {
-            success && <img src={successImg}/>
+            success && <><img src={successImg} className="successImg"/><div className="bodydiv"></div></>
           }
           <Pricediv>
             <Text size="28px" style={{textAlign:'left'}} weight="400">Price Details</Text>
