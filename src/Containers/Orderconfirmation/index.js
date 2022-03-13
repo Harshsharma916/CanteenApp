@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Menucard from "../../Components/Menucard";
 import Logo from "../../Images/Logo.svg";
 import successImg from "../../Images/success.svg";
+import { CloseOutlined } from "@ant-design/icons";
 
 const Body = styled.div`
   display: flex;
@@ -44,13 +45,33 @@ const Body = styled.div`
     top: -100px;
     height: 85vh;
   }
+
+  .closeButton{
+    position: absolute;
+    z-index: 5;
+    top: 14%;
+    right: 32%;
+    padding: 7px;
+    transform: scale(2);
+    background: white;
+    border-radius: 50%;
+    color: #fe724d;
+
+    :hover {
+      // background: #a0a0a0;
+      color: black;
+      padding: 9px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
 `;
 
 const Pricediv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-  width: 25%;
+  width: 30%;
   margin-right: 30px;
 
   .categorydiv {
@@ -63,6 +84,7 @@ const Pricediv = styled.div`
       width: 120px;
       border: 1px solid #fe724d;
       border-radius: 8px;
+      font-size: 18px;
 
       :hover {
         background: #fe724d;
@@ -77,6 +99,7 @@ const Pricediv = styled.div`
       background: rgba(254, 120, 77, 0.9);
       border-radius: 8px;
       color: white;
+      font-size: 18px;
     }
   }
 
@@ -201,7 +224,7 @@ const Orderconfirmation = () => {
     comment: "perfecto",
     typeOfOrder: "dinein",
     totalPrice: totalAmount() + 40,
-    modeOfPayment: payment,
+    modeOfPayment: payment=='upi'?'online':'cod',
   };
 
   const header = {
@@ -247,6 +270,10 @@ const Orderconfirmation = () => {
           {success && (
             <>
               <img src={successImg} className="successImg" />
+              <CloseOutlined className="closeButton"
+                onClick={() =>
+                  setSuccess(false)
+                }/>
               <div className="bodydiv"></div>
             </>
           )}

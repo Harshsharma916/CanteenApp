@@ -65,11 +65,15 @@ const Inputdiv = styled.div`
   .dropdown {
     position: absolute;
     z-index: 3;
-    top: 80px;
+    top: 90px;
     background: white;
     padding: 10px 80px;
     display: flex;
     flex-direction: column;
+
+    :hover{
+      cursor: pointer;
+    }
   }
 `;
 const About = styled.div`
@@ -210,7 +214,8 @@ const Homepage = () => {
             ABOUT
           </Text>
           <Text color="black" size="25px">
-            Now the food walks to you
+            When the time comes ,food walks to you. After all the hustle of 'canteen vaale bhaiya' to track the orders of so many students , here is the solution to breathe in peace with an app doing managing task for you.
+            Students can order from their rooms and opt to dine-in , pick up and delivery. This app also gives the expense status of the students to let them know 'Kitni Chapo Di'.
           </Text>
         </About>
       </Wrapper>

@@ -160,8 +160,8 @@ const LoginCard = ({
           notification.success({
             message: "Successfully Logged In!",
           });
-          if (pathname !== "/placeorder") {
-            console.log(pathname);
+          if (pathname == "/") {
+            // console.log(pathname);
             navigate("/");
           }
         }

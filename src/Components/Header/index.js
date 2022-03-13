@@ -65,7 +65,7 @@ const Header = ({ college, show }) => {
 
   return (
     <Wrapper>
-      <img className="Logo" src={Logo} onClick={() => clearFunc()} />
+      <img className="Logo" src={Logo} onClick={() => navigate('/')} />
       {showLogout && <Button className="logouttext" color="black" bg="white" onClick={() => clearFunc()}>Logout</Button>}
       {college && (
         <Text size="20px" weight="300">
