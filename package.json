@@ -23,11 +23,13 @@
     "redux": "^4.1.2",
     "reduxsauce": "^1.2.1",
     "reselect": "^4.1.5",
+    "serve": "^13.0.2",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-dotenv && react-scripts start",
+    "start": "serve -s build && SET NODE_ENV=production",
+    "dev": "react-dotenv && react-scripts start",
     "build": "react-dotenv && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
