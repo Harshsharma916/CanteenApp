@@ -7,3 +7,6 @@
 - For student:
 - student@gmail.com : email
 - testtest : password
+
+## Do visit our web app v1(Lot's of new stuff coming soon.)
+- https://grub-it-interface.herokuapp.com/
