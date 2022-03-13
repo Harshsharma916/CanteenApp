@@ -143,13 +143,15 @@ const LoginCard = ({toggleLogin,toggleSignup,loginClicked,signUpClicked,show}) =
           "https://grub-it.herokuapp.com/api/v1/user/login",
           values
         );
-        if (response.status == "success") {
+        console.log(response)
+        if (response.data.status == "success") {
           setLoading(false);
-          dispatch({ type: "login", data: response?.data?.user });
+          dispatch({ type: "login", data: response?.data?.data.user });
+          dispatch({type:'token',data:response?.data?.token})
           notification.success({
             message: "Successfully Logged In!",
           });
-          navigate("/home");
+          navigate("/");  
         }
       } catch (err) {
         setLoading(false);

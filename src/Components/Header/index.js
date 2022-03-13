@@ -4,8 +4,8 @@ import Logo from "../../Images/Logo.svg";
 import { Button, Text } from "../ExportStyles";
 import LoginCard from "../Login";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import user from "../../Images/user.png";
 const Wrapper = styled.div`
   display: flex;
   padding: 30px 5%;
@@ -26,13 +26,31 @@ const Wrapper = styled.div`
     display: flex;
     gap: 40px;
   }
+
+  .userImg {
+    width: 60px;
+    position: relative;
+    :hover{
+      cursor:pointer;
+    }
+
+  }
+  
+  .logouttext {
+    position: absolute;
+    top: 60px;
+    right: 150px;
+    z-index: 2;
+  }
 `;
 
 const Header = ({ college, show }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginClicked, toggleLogin] = useState(false);
   const [signUpClicked, toggleSignup] = useState(false);
   const loginData = useSelector((state) => state.loginData);
+  const [showLogout, setLogout] = useState(false);
 
   useEffect(() => {
     if (show) {
@@ -40,37 +58,53 @@ const Header = ({ college, show }) => {
     }
   }, [show]);
 
+  function clearFunc() {
+    dispatch({ type: "clear" });
+    navigate("/");
+  }
+
   return (
     <Wrapper>
-      <img className="Logo" src={Logo} onClick={() => navigate("/")} />
+      <img className="Logo" src={Logo} onClick={() => clearFunc()} />
+      {showLogout && <Button className="logouttext" color="black" bg="white" onClick={() => clearFunc()}>Logout</Button>}
       {college && (
         <Text size="20px" weight="300">
           {college}
         </Text>
       )}
-      <div className="Buttondiv">
-        <Button
-          color="black"
-          onClick={() =>
-            toggleLogin((prevState) => {
-              return !prevState;
-            })
-          }
-        >
-          Login
-        </Button>
-        <Button
-          bg="#FE724D"
-          color="white"
-          onClick={() =>
-            toggleSignup((prevState) => {
-              return !prevState;
-            })
-          }
-        >
-          Sign up
-        </Button>
-      </div>
+      {loginData?.name ? (
+        <img
+          src={user}
+          className="userImg"
+          onClick={() => setLogout((prev) => !prev)}
+        />
+      ) : (
+        <>
+          <div className="Buttondiv">
+            <Button
+              color="black"
+              onClick={() =>
+                toggleLogin((prevState) => {
+                  return !prevState;
+                })
+              }
+            >
+              Login
+            </Button>
+            <Button
+              bg="#FE724D"
+              color="white"
+              onClick={() =>
+                toggleSignup((prevState) => {
+                  return !prevState;
+                })
+              }
+            >
+              Sign up
+            </Button>
+          </div>
+        </>
+      )}
       {loginData?.name ? (
         ""
       ) : (
