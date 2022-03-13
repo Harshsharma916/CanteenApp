@@ -47,7 +47,6 @@ const Canteenmenu = () => {
   const navigate = useNavigate();
   const selectedCanteen = useSelector((state) => state.selectedCanteen);
   const placedOrders = useSelector((state) => state.placeOrder);
-  const categories = ["Patties", "Rolls", "Parathas"];
   const [placeOrder, setPlaceOrder] = useState(false);
   const collegeName = selectedCanteen?.canteen?.college?.name;
   // console.log(selectedCanteen.menu.rolls, "MENU");
@@ -56,11 +55,13 @@ const Canteenmenu = () => {
       navigate('/placeorder')
     }
   },[placedOrders])
-
+  
   function PlaceOrder() {
     console.log("INSIDE PLACEORDER");
     setPlaceOrder(true);
   }
+  
+  const categories = ["Rolls", "Parathas","Burger","Sandwich"];
 
   return (
     <>

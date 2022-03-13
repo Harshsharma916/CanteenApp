@@ -9,7 +9,7 @@ import { AxiosGet, AxiosPost, URL } from "../../Components/Apicaller";
 import { useEffect, useState } from "react";
 import Menucard from "../../Components/Menucard";
 import Logo from "../../Images/Logo.svg";
-import successImg from "../../Images/success.svg"
+import successImg from "../../Images/success.svg";
 
 const Body = styled.div`
   display: flex;
@@ -23,18 +23,18 @@ const Body = styled.div`
     gap: 20px;
     height: 80%;
     overflow-y: scroll;
-    ::-webkit-scrollbar{
+    ::-webkit-scrollbar {
       display: none;
     }
   }
-  .successImg{
+  .successImg {
     width: 40%;
     position: absolute;
     z-index: 2;
     top: 10%;
     left: 30%;
   }
-  .bodydiv{
+  .bodydiv {
     position: absolute;
     background: black;
     z-index: 1;
@@ -64,17 +64,17 @@ const Pricediv = styled.div`
       border: 1px solid #fe724d;
       border-radius: 8px;
 
-      :hover{
+      :hover {
         background: #fe724d;
-        cursor:pointer;
+        cursor: pointer;
         color: white;
       }
     }
 
-    .selected{
+    .selected {
       padding: 5px 0px;
       width: 120px;
-      background: rgba(254,120,77,0.9);
+      background: rgba(254, 120, 77, 0.9);
       border-radius: 8px;
       color: white;
     }
@@ -101,9 +101,11 @@ const Pricediv = styled.div`
 const Orderconfirmation = () => {
   const orderitems = useSelector((state) => state.placeOrder);
   const loginData = useSelector((state) => state.loginData);
-  const [payment,setpayment] = useState('');
-  const [success,setSuccess] = useState(false);
-  const [show,setShow] = useState(false);
+  const token = useSelector((state) => state.token);
+  const selectedCanteen = useSelector((state) => state.selectedCanteen);
+  const [payment, setpayment] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     // if (location.state?.promoCode && !selectedPromocode) {
@@ -111,22 +113,22 @@ const Orderconfirmation = () => {
     // }
     // add rzp script
 
-    if (navigator.userAgent.toLowerCase().includes('phonepe')) {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://checkout.razorpay.com/v1/razorpay.js';
+    if (navigator.userAgent.toLowerCase().includes("phonepe")) {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://checkout.razorpay.com/v1/razorpay.js";
       document.head.appendChild(script);
     } else {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
       document.head.appendChild(script);
     }
   }, []);
 
   function totalAmount() {
     let total = 0;
-    for (let i=0; i < orderitems.length; i++) {
+    for (let i = 0; i < orderitems.length; i++) {
       total += orderitems[i].price * orderitems[i].count;
     }
     return total;
@@ -134,38 +136,38 @@ const Orderconfirmation = () => {
 
   const finalizeReq = {
     orderId: 12345,
-    orderType: 'food',
-    amount: totalAmount()+40,
+    orderType: "food",
+    amount: totalAmount() + 40,
     paymentId: null,
-  }
+  };
 
-  const razorpayStandardCheckout = data => {
+  const razorpayStandardCheckout = (data) => {
     const base_amount = data.amount;
     const amount = data.amount;
-    const base_currency = 'INR';
-    const currency = 'INR';
+    const base_currency = "INR";
+    const currency = "INR";
     const orderId = data.orderId;
     const orderType = data.orderType;
     const promoCodeId = data.promoCodeId;
     const description = `${orderType}|${orderId}|${amount}|${currency}|${base_currency}|${promoCodeId}`;
     // eslint-disable-next-line no-undef
     window.r = new Razorpay({
-      key: 'rzp_test_Up5TWUTLS5U0Dw',
-      protocol: 'https',
-      hostname: 'api.razorpay.com',
+      key: "rzp_test_Up5TWUTLS5U0Dw",
+      protocol: "https",
+      hostname: "api.razorpay.com",
       base_amount: base_amount * 100,
       base_currency: base_currency,
       amount: amount * 100,
       currency: currency,
-      name: 'GRUB IT',
+      name: "GRUB IT",
       description: description,
       prefill: {
-        name: loginData?.name || 'Harsh',
-        contact: `+91${loginData?.mobileNumber}` || '+911234567890',
-        email: loginData?.email || 'hash@gmail.com',
+        name: loginData?.name || "Harsh",
+        contact: `+91${loginData?.mobileNumber}` || "+911234567890",
+        email: loginData?.email || "hash@gmail.com",
       },
       image: Logo,
-      handler: function(response) {
+      handler: function (response) {
         const paymentId = response.razorpay_payment_id;
         data.paymentId = paymentId;
         if (paymentId) {
@@ -174,9 +176,9 @@ const Orderconfirmation = () => {
           // dispatchRemovePickupData(pickupData);
           // dispatchRemoveSelectedStoreId(selectedStoreId);
           // history.replace(routeConstants.success.route);
-          setSuccess(true)
+          setSuccess(true);
         } else {
-          console.log('PAYMENT ERROR');
+          console.log("PAYMENT ERROR");
         }
       },
     });
@@ -184,33 +186,74 @@ const Orderconfirmation = () => {
     r.open();
   };
 
-  function placeOrder(){
-    if(loginData?.name){
-      if(payment==='upi'){
-        razorpayStandardCheckout(finalizeReq)
-      }else{
+  const college = selectedCanteen?.canteen?.college;
+  const orderdata = [
+    orderitems.map((item, key) => {
+      return { name: item.name, price: item.price, quantity: item.count };
+    }),
+  ];
+
+  // console.log(orderdata[0]);
+
+  const data = {
+    "orderDetails:": orderdata[0],
+    timeEstimated: 15,
+    comment: "perfecto",
+    typeOfOrder: "dinein",
+    totalPrice: totalAmount() + 40,
+    modeOfPayment: payment,
+  };
+
+  const header = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+  async function placeOrder() {
+    if (loginData?.name) {
+      if (payment === "upi") {
+        razorpayStandardCheckout(finalizeReq);
+      } else {
         setSuccess(true);
       }
-    }else{
-      setShow((prev) => !prev)
+      const response = await AxiosPost(
+        `https://grub-it.herokuapp.com/api/v1/orders/${college._id}/${selectedCanteen.canteen._id}`,
+        data,
+        header
+      );
+      console.log(response, "RESPONSE");
+      if (response.data.status == "success") {
+      }
+    } else {
+      setShow((prev) => !prev);
     }
   }
   return (
     <>
-      <Header show={show}/>
+      <Header show={show} />
       <Wrapper>
-        <Text style={{marginTop:'30px',textAlign:'left',marginBottom:'20px'}} size="30px" weight="500">Orders</Text>
+        <Text
+          style={{ marginTop: "30px", textAlign: "left", marginBottom: "20px" }}
+          size="30px"
+          weight="500"
+        >
+          Orders
+        </Text>
         <Body>
-          <div className="orderitems" >
+          <div className="orderitems">
             {orderitems.map((item, key) => {
               return <Menucard key={key} data={item} />;
             })}
           </div>
-          {
-            success && <><img src={successImg} className="successImg"/><div className="bodydiv"></div></>
-          }
+          {success && (
+            <>
+              <img src={successImg} className="successImg" />
+              <div className="bodydiv"></div>
+            </>
+          )}
           <Pricediv>
-            <Text size="28px" style={{textAlign:'left'}} weight="400">Price Details</Text>
+            <Text size="28px" style={{ textAlign: "left" }} weight="400">
+              Price Details
+            </Text>
             <div className="categorydiv">
               <div className="category">Delivery</div>
               <div className="selected">Pick up</div>
@@ -218,32 +261,52 @@ const Orderconfirmation = () => {
             </div>
             <div className="ordersummary">
               <div className="ordersummary-sections">
-                <Text size="20px" weight="300">Order Summary</Text>
+                <Text size="20px" weight="300">
+                  Order Summary
+                </Text>
                 <Text size="20px" weight="500">
                   ₹{totalAmount()}
                 </Text>
               </div>
               <div className="ordersummary-sections">
-                <Text size="20px" weight="300">Delivery Charge</Text>
+                <Text size="20px" weight="300">
+                  Delivery Charge
+                </Text>
                 <Text size="20px" weight="500">
                   ₹40
                 </Text>
               </div>
               <div className="ordersummary-sections">
-                <Text size="20px" weight="300">Total</Text>
+                <Text size="20px" weight="300">
+                  Total
+                </Text>
                 <Text size="20px" weight="500">
                   ₹{totalAmount() + 40}
                 </Text>
               </div>
             </div>
             <div className="payment">
-              <Text size="20px" style={{textAlign: 'left'}}>Payment</Text>
+              <Text size="20px" style={{ textAlign: "left" }}>
+                Payment
+              </Text>
               <div className="categorydiv">
-                <div className={payment=='upi'?'selected':'category'} onClick={()=> setpayment('upi')}>UPI</div>
-                <div className={payment=='cod'?'selected':'category'} onClick={()=> setpayment('cod')}>COD</div>
+                <div
+                  className={payment == "upi" ? "selected" : "category"}
+                  onClick={() => setpayment("upi")}
+                >
+                  UPI
+                </div>
+                <div
+                  className={payment == "cod" ? "selected" : "category"}
+                  onClick={() => setpayment("cod")}
+                >
+                  COD
+                </div>
               </div>
             </div>
-            <Button bg="#FE724D" color="white" onClick={() => placeOrder()}>PLACE ORDER</Button>
+            <Button bg="#FE724D" color="white" onClick={() => placeOrder()}>
+              PLACE ORDER
+            </Button>
           </Pricediv>
         </Body>
       </Wrapper>

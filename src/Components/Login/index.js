@@ -9,6 +9,7 @@ import { notification } from "antd";
 import { AxiosGet, AxiosPost, URL } from "../../Components/Apicaller";
 import { useEffect, useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
 
 const Form = styled.form`
   position: absolute;
@@ -52,12 +53,20 @@ const Form = styled.form`
   }
 `;
 
-const LoginCard = ({toggleLogin,toggleSignup,loginClicked,signUpClicked,show}) => {
+const LoginCard = ({
+  toggleLogin,
+  toggleSignup,
+  loginClicked,
+  signUpClicked,
+  show,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
-//   const [loginClicked, toggleLogin] = useState(false);
-//   const [signUpClicked, toggleSignup] = useState(false);
+  //   const [loginClicked, toggleLogin] = useState(false);
+  //   const [signUpClicked, toggleSignup] = useState(false);
+  const pathname = location.pathname;
 
   const handleValidate = (value) => {
     const errors = {};
@@ -143,15 +152,18 @@ const LoginCard = ({toggleLogin,toggleSignup,loginClicked,signUpClicked,show}) =
           "https://grub-it.herokuapp.com/api/v1/user/login",
           values
         );
-        console.log(response)
+        console.log(response);
         if (response.data.status == "success") {
           setLoading(false);
           dispatch({ type: "login", data: response?.data?.data.user });
-          dispatch({type:'token',data:response?.data?.token})
+          dispatch({ type: "token", data: response?.data?.token });
           notification.success({
             message: "Successfully Logged In!",
           });
-          navigate("/");  
+          if (pathname !== "/placeorder") {
+            console.log(pathname);
+            navigate("/");
+          }
         }
       } catch (err) {
         setLoading(false);

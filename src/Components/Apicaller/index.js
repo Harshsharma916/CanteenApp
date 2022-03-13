@@ -10,8 +10,10 @@ export async function AxiosGet(url) {
   }
 }
 
-export async function AxiosPost(url, data) {
-  const response = await axios.post(url, data);
+export async function AxiosPost(url, data, headers) {
+  const response = await axios.post(url, data, {
+    headers: headers,
+  });
   if (response) {
     return response;
   }

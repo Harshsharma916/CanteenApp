@@ -57,7 +57,7 @@ const Card = ({ data, order }) => {
         <Text color="white" size="22px" weight="400">
           {data?.name}
         </Text>
-        <Text color="white" size="20px" weight="200">
+        <Text color="white" size="20px" weight="300">
           ₹{data?.price}/-
         </Text>
       </div>
