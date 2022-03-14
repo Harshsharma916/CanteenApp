@@ -14,7 +14,6 @@ const Subdiv = styled.div`
   height: 90vh;
   align-items: center;
   justify-content: space-between;
-  // padding: 0px 5%;
 
   .info {
     display: flex;

@@ -6,7 +6,7 @@ import { Wrapper, Text, Button } from "../../Components/ExportStyles";
 import Card from "../../Components/FoodCard";
 import Header from "../../Components/Header";
 import Menucard from "../../Components/Menucard";
-import { Toppickdiv } from "../Canteenlist";
+import { Toppickdiv } from "../CanteenList";
 
 const Menu = styled.div`
   display: flex;
